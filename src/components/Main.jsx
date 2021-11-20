@@ -1,8 +1,8 @@
 import React, { Component, useState } from 'react';
-import './Main.css';
+import Form from './Form';
+import Tasks from './Tasks';
 
-// Form.
-import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
+import './Main.css';
 
 class Main extends Component {
   state = {
@@ -42,7 +42,6 @@ class Main extends Component {
       return;
     }
 
-    console.log(index);
     if (index == -1) {
       return this.setState({
         tasks: [...tasks, newTask],
@@ -87,26 +86,17 @@ class Main extends Component {
     return (
       <div className="main">
         <h1>Task List</h1>
-        <form onSubmit={this.handleSubmit} className="form">
-          <input onChange={this.handleInputChange} value={newTask} type="text" />
-          <button type="submit">
-            <FaPlus />
-          </button>
-        </form>
 
-        <ul className="tasks">
-          {
-            tasks.map((task, index) => (
-              <li key={task}>
-                {task}
-                <span>
-                  <FaEdit onClick={(event) => this.handleEdit(event, index)} title="Edit task" className="edit"/>
-                  <FaTrash onClick={(event) => this.handleDelete(event, index)} title="Delete task" className="delete" />
-                </span>
-              </li>
-            ))
-          }
-        </ul>
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleInputChange={this.handleInputChange}
+          newTask={newTask}
+        />
+
+        <Tasks tasks={tasks}
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+        />
       </div>
     );
   }
